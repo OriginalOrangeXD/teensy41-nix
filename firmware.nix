@@ -1,6 +1,5 @@
 { pkgs, ... }:
 
-# hacky usage of arduino-cli to preprocess ulisp "ino" source into compilable C++ code
 pkgs.stdenv.mkDerivation rec {
   name = "firmware-arm.cpp";
 
@@ -10,6 +9,7 @@ pkgs.stdenv.mkDerivation rec {
     arduino-cli
   ];
 
+  # This needs to be adopted for teensy41, but the general idea would be to convert ino code to cpp
   buildPhase = ''
     export HOME=/tmp/arduino
     arduino-cli core install arduino:samd
