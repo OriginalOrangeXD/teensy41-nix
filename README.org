@@ -1,0 +1,7 @@
+* teensy-env
+
+This repository provides a basic Nix flake for building the Teensy 4.0 core library as well as a convenient builder for single-file C++ programs targeting this platform.
+
+e.g. =nix run .#flash-blink= is all that is needed to reproducibly build and flash the canonical Arduino blink example to a Teensy board attached via USB.
+
+[[http://www.ulisp.com/][uLisp]] is also packaged and ready to flash in the same fashion (albeit using an fixed-output derivation to transform the uLisp sketch into valid and compilable C++ code).

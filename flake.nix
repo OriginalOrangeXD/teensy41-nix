@@ -14,25 +14,21 @@
 
     image = import ./build.nix { inherit pkgs teensy-core; };
 
+    teensy-test = image.build "teensy-test" ./test;
 
     imageWith = libs: let
       teensy-core = import ./core.nix { inherit pkgs libs; };
     in (import ./build.nix { inherit pkgs teensy-core; });
 
-    teensy-firmware = let
-      firmware-source = import ./firmware.nix { inherit pkgs; };
-      firmware-deps   = with teensy-extras; [ spi wire ];
-    in (imageWith firmware-deps).build
-      "teensy-firmware"
-      (pkgs.linkFarmFromDrvs "firmware" [ firmware-source ]);
 
   in {
     packages.${system} = {
-      inherit teensy-core teensy-firmware;
+      inherit teensy-core teensy-test;
     };
 
     apps.${system} = {
-      flash-firmware   = image.flash teensy-firmware "firmware-arm";
+      flash-blink   = image.flash teensy-test  "blink";
+      flash-counter = image.flash teensy-test  "counter";
     };
 
     custom = {
